@@ -1,0 +1,23 @@
+{
+    "name": "twitter-text",
+    "description": "Twitter text processing library (auto linking and extraction of usernames, lists and hashtags) ",
+    "version": "0.0.1",
+    "author": "Twitter, Inc.",
+    "contributors": [
+        {"name": "Daniel Gasienica", "email": "daniel@gasienica.ch"},
+        {"name": "Aseem Kishore", "email": "aseem.kishore@gmail.com"}
+    ],
+    "main": "./twitter-text.js",
+    "keywords": [
+        "twitter",
+        "text",
+        "usernames",
+        "mentions",
+        "hashtags",
+        "lists",
+        "extraction"
+    ],
+    "engines": {
+        "node": "0.4.x"
+    }
+}
