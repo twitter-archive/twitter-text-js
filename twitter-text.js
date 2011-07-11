@@ -1,5 +1,13 @@
-if (!window.twttr) {
-  window.twttr = {};
+var twttr;
+if (typeof exports !== 'undefined' && exports !== null) {
+  // Node
+  twttr = exports;
+} else {
+  // Browser
+  if (!window.twttr) {
+    window.twttr = {};
+  }
+  twttr = window.twttr;
 }
 
 (function() {
