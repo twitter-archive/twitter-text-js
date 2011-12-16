@@ -39,7 +39,7 @@ test("twttr.txt.autolink", function() {
   ok(twttr.txt.autoLink("@tw", { at: "!" }).match(/!<a[^>]+>tw<\/a>/), "Override at");
   ok(twttr.txt.autoLink("@tw", { preChunk: "<b>" }).match(/@<a[^>]+><b>tw<\/a>/), "Override preChunk");
   ok(twttr.txt.autoLink("@tw", { postChunk: "</b>" }).match(/@<a[^>]+>tw<\/b><\/a>/), "Override postChunk");
-  ok(twttr.txt.autoLink("@tw", { usernameIncludeSymbol: true }).match(/<a[^>]+>@tw<\/a>/), "Include @ in the autolink");
+  ok(twttr.txt.autoLink("@tw", { usernameIncludeSymbol: true }).match(/<a[^@>]+>@tw<\/a>/), "Include @ in the autolink");
   ok(!twttr.txt.autoLink("foo http://example.com", { usernameClass: 'custom-user' }).match(/custom-user/), "Override usernameClass should not be applied to URL");
 
   // List Overrides
