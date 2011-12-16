@@ -361,10 +361,17 @@ if (!window.twttr) {
               d[k] = options[k];
             }
           }
+          if (options.usernameIncludeSymbol) {
+            d.chunk = d.at + d.user;
+            d.at = "";
+          }
+          else {
+            d.chunk = d.user;
+          }
 
           if (slashListname && !options.suppressLists) {
             // the link is a list
-            var list = d.chunk = stringSupplant("#{user}#{slashListname}", d);
+            var list = d.chunk = stringSupplant("#{chunk}#{slashListname}", d);
             d.list = twttr.txt.htmlEscape(list.toLowerCase());
             return stringSupplant("#{before}#{at}<a class=\"#{urlClass} #{listClass}\" href=\"#{listUrlBase}#{list}\"#{extraHtml}>#{preChunk}#{chunk}#{postChunk}</a>", d);
           } else {
@@ -373,9 +380,8 @@ if (!window.twttr) {
               return match;
             } else {
               // this is a screen name
-              d.chunk = twttr.txt.htmlEscape(user);
-              d.dataScreenName = !options.suppressDataScreenName ? stringSupplant("data-screen-name=\"#{chunk}\" ", d) : "";
-              return stringSupplant("#{before}#{at}<a class=\"#{urlClass} #{usernameClass}\" #{dataScreenName}href=\"#{usernameUrlBase}#{chunk}\"#{extraHtml}>#{preChunk}#{chunk}#{postChunk}</a>", d);
+              d.dataScreenName = !options.suppressDataScreenName ? stringSupplant("data-screen-name=\"#{user}\" ", d) : "";
+              return stringSupplant("#{before}#{at}<a class=\"#{urlClass} #{usernameClass}\" #{dataScreenName}href=\"#{usernameUrlBase}#{user}\"#{extraHtml}>#{preChunk}#{chunk}#{postChunk}</a>", d);
             }
           }
         });
