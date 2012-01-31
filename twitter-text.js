@@ -778,6 +778,7 @@ if (!window.twttr) {
   };
 
   var MAX_LENGTH = 140;
+  var TCO_LENGTH = 20;
 
   // Characters not allowed in Tweets
   var INVALID_CHARACTERS = [
@@ -795,6 +796,21 @@ if (!window.twttr) {
     fromCode(0x202D),
     fromCode(0x202E)
   ];
+  
+  twttr.txt.tweetLength = function(tweet){
+    if ( !tweet ) return 0;
+    
+    var length = tweet.length;
+    var urls   = twttr.txt.extractUrls(tweet);
+    length     = length - urls.join('').length;
+    
+    for (var i=0; i < urls.length; i++) {
+      length += TCO_LENGTH;
+      urls[i].match(/^https:/) && (length += 1);
+    };
+
+    return length;
+  };
 
   // Check the text for any reason that it may not be valid as a Tweet. This is meant as a pre-validation
   // before posting to api.twitter.com. There are several server-side reasons for Tweets to fail but this pre-validation
@@ -810,7 +826,7 @@ if (!window.twttr) {
       return "empty";
     }
 
-    if (text.length > MAX_LENGTH) {
+    if (twttr.txt.tweetLength(text) > MAX_LENGTH) {
       return "too_long";
     }
 

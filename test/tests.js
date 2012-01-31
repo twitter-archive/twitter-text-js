@@ -78,3 +78,12 @@ test("twttr.txt.autolink", function() {
     equal(twttr.txt.extractUrls("http://twitt" + invalidChars[i] + "er.com").length, 0, 'Should not extract URL with invalid cahracter');
   }
 });
+
+test("twttr.txt.tweetLength", function(){
+  var tweet = "Awesome URL is at:";
+  var url   = "http://example.com/long/url";
+  var TCO_LENGTH = 20;
+  
+  equal(twttr.txt.tweetLength(tweet), tweet.length);
+  equal(twttr.txt.tweetLength(tweet + url), tweet.length + TCO_LENGTH);
+});
