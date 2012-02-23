@@ -119,6 +119,8 @@
     }
 
 
+    var expected = document.createElement("div");
+    var result = document.createElement("div");
     for (var suite in cases) {
       (function(suite) {
         module(suite);
@@ -128,7 +130,14 @@
             var tester = getTester(suite, section);
             test(section, function() {
               for (var testCase in cases[suite][section]) {
-                same(tester(cases[suite][section][testCase]), cases[suite][section][testCase].expected, cases[suite][section][testCase].description);
+                if (suite == "autolink") {
+                  // compare HTML tags w/o checking attribute order
+                  result.innerHTML = tester(cases[suite][section][testCase]);
+                  expected.innerHTML = cases[suite][section][testCase].expected;
+                  ok(result.isEqualNode(expected), cases[suite][section][testCase].description);
+                } else {
+                  same(tester(cases[suite][section][testCase]), cases[suite][section][testCase].expected, cases[suite][section][testCase].description);
+                }
               }
             });
           }(section));
