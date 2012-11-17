@@ -163,6 +163,9 @@ test("twttr.txt.autolink", function() {
   ok(autoLinkResult.match(/<a[^>]+>pre_<s>#<\/s><b>hash<\/b>_post<\/a>/), "linkTextBlock should modify a hashtag link text");
   ok(autoLinkResult.match(/<a[^>]+>pre_<s>@<\/s><b>mention<\/b>_post<\/a>/), "linkTextBlock should modify a username link text");
 
+  // test urls w/@handle
+  ok(twttr.txt.autoLink("http://medium.com/@fat") == '<a href="http://medium.com/@fat" rel="nofollow">http://medium.com/@fat</a>', "@fat shouldn't be linkified as a seperate entity");
+
   // url entities
   autoLinkResult = twttr.txt.autoLink("http://t.co/0JG5Mcq", {
     invisibleTagAttrs: "style='font-size:0'",
