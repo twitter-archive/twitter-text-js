@@ -1155,8 +1155,8 @@
   twttr.txt.getTweetLength = function(text, options) {
     if (!options) {
       options = {
-          short_url_length: 20,
-          short_url_length_https: 21
+          short_url_length: 22,
+          short_url_length_https: 23
       };
     }
     var textLength = text.length;
