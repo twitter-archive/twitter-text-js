@@ -58,6 +58,11 @@ test("twttr.txt.extract", function() {
   twttr.txt.modifyIndicesFromUnicodeToUTF16(text, extracted);
   same(extracted, [{url:"http://twitter.com", indices:[3, 21]}, {url:"http://test.com", indices:[25, 40]}], "URL w/ Supplementary character, UTF-16 indices");
 
+  // handle when the url path ends with @ symbols
+  text = "http://twitter.com/path/more@twitter \uD801\uDC00 http://test.com"
+  extracted = twttr.txt.extractUrlsWithIndices(text);
+  same(extracted, [ { "url": "http://twitter.com/path/more@twitter", "indices": [ 0, 36 ] }, { "url": "http://test.com", "indices": [ 40, 55 ] } ], "URL w/ Supplementary character, @ symbols in valid url path");
+
   var testCases = [
     {text:"abc", indices:[[0,3]], unicode_indices:[[0,3]]},
     {text:"\uD83D\uDE02abc", indices:[[2,5]], unicode_indices:[[1,4]]},
