@@ -177,7 +177,7 @@ test("twttr.txt.autolink", function() {
   // extractUrlsWithoutProtocol (the default mode of extractEntitiesWithIndices)
   deepEqual(twttr.txt.autoLinkEntities("twitter.com", twttr.txt.extractEntitiesWithIndices("twitter.com")),
       "<a href=\"http://twitter.com\" rel=\"nofollow\">twitter.com</a>", "AutoLink with extractUrlsWithoutProtocol");
-  deepEqual(twttr.txt.autoLinkEntities("twitter.com", twttr.txt.extractEntitiesWithIndices("MLB.TV")),
+  deepEqual(twttr.txt.autoLinkEntities("MLB.TV", twttr.txt.extractEntitiesWithIndices("MLB.TV")),
       "MLB.TV", "Don't AutoLink withoutProtocol just because domain is uppercase");
 
   // url entities
