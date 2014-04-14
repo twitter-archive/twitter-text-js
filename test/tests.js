@@ -100,8 +100,10 @@ test("twttr.txt.extract", function() {
 test("twttr.txt.autolink", function() {
   // Username Overrides
   ok(twttr.txt.autoLink("@tw", { symbolTag: "s" }).match(/<s>@<\/s><a[^>]+>tw<\/a>/), "Apply symbolTag to @username");
+  ok(twttr.txt.autoLink("@tw", { symbolTag: "s", symbolTagClass: "symbol" }).match(/<s class="symbol">@<\/s><a[^>]+>tw<\/a>/), "Apply symbolTagClass to symbol tag");
   ok(!twttr.txt.autoLink("@tw", { symbolTag: "s" }).match(/symbolTag/i), "Do not include symbolTag attribute");
   ok(twttr.txt.autoLink("@tw", { textWithSymbolTag: "b" }).match(/@<a[^>]+><b>tw<\/b><\/a>/), "Apply textWithSymbolTag to @username");
+  ok(twttr.txt.autoLink("@tw", { textWithSymbolTag: "b", textWithSymbolTagClass: "text" }).match(/@<a[^>]+><b class="text">tw<\/b><\/a>/), "Apply textWithSymbolTagClass to @username");
   ok(!twttr.txt.autoLink("@tw", { textWithSymbolTag: "b" }).match(/textWithSymbolTag/i), "Do not include textWithSymbolTag attribute");
   ok(twttr.txt.autoLink("@tw", { symbolTag: "s", textWithSymbolTag: "b" }).match(/<s>@<\/s><a[^>]+><b>tw<\/b><\/a>/), "Apply symbolTag and textWithSymbolTag to @username");
   deepEqual(twttr.txt.autoLink("@tw", { usernameIncludeSymbol: true }), "<a class=\"tweet-url username\" href=\"https://twitter.com/tw\" data-screen-name=\"tw\" rel=\"nofollow\">@tw</a>",
@@ -110,7 +112,9 @@ test("twttr.txt.autolink", function() {
 
   // List Overrides
   ok(twttr.txt.autoLink("@tw/somelist", { symbolTag: "s" }).match(/<s>@<\/s><a[^>]+>tw\/somelist<\/a>/), "Apply symbolTag to list");
+  ok(twttr.txt.autoLink("@tw/somelist", { symbolTag: "s", symbolTagClass: "symbol" }).match(/<s class="symbol">@<\/s><a[^>]+>tw\/somelist<\/a>/), "Apply symbolTagClass to list");
   ok(twttr.txt.autoLink("@tw/somelist", { textWithSymbolTag: "b" }).match(/@<a[^>]+><b>tw\/somelist<\/b><\/a>/), "apply textWithSymbolTag to list");
+  ok(twttr.txt.autoLink("@tw/somelist", { textWithSymbolTag: "b", textWithSymbolTagClass: "text" }).match(/@<a[^>]+><b class="text">tw\/somelist<\/b><\/a>/), "apply textWithSymbolTagClass to list");
   ok(twttr.txt.autoLink("@tw/somelist", { symbolTag: "s", textWithSymbolTag: "b" }).match(/<s>@<\/s><a[^>]+><b>tw\/somelist<\/b><\/a>/), "apply symbolTag and textWithSymbolTag to list");
   deepEqual(twttr.txt.autoLink("@tw/somelist", { usernameIncludeSymbol: true }), "<a class=\"tweet-url list-slug\" href=\"https://twitter.com/tw/somelist\" rel=\"nofollow\">@tw/somelist</a>",
       "Include @ in the autolinked list");
@@ -119,7 +123,9 @@ test("twttr.txt.autolink", function() {
 
   // Hashtag Overrides
   ok(twttr.txt.autoLink("#hi", { symbolTag: "s" }).match(/<a[^>]+><s>#<\/s>hi<\/a>/), "Apply symbolTag to hash");
+  ok(twttr.txt.autoLink("#hi", { symbolTag: "s", symbolTagClass: "symbol" }).match(/<a[^>]+><s class="symbol">#<\/s>hi<\/a>/), "Apply symbolTagClass to hash");
   ok(twttr.txt.autoLink("#hi", { textWithSymbolTag: "b" }).match(/<a[^>]+>#<b>hi<\/b><\/a>/), "Apply textWithSymbolTag to hash");
+  ok(twttr.txt.autoLink("#hi", { textWithSymbolTag: "b", textWithSymbolTagClass: "text" }).match(/<a[^>]+>#<b class="text">hi<\/b><\/a>/), "Apply textWithSymbolTagClass to hash");
   ok(twttr.txt.autoLink("#hi", { symbolTag: "s", textWithSymbolTag: "b" }).match(/<a[^>]+><s>#<\/s><b>hi<\/b><\/a>/), "Apply symbolTag and textWithSymbolTag to hash");
 
   // htmlEscapeNonEntities

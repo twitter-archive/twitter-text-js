@@ -418,8 +418,9 @@
                             'usernameUrlBase':true, 'listUrlBase':true, 'hashtagUrlBase':true, 'cashtagUrlBase':true,
                             'usernameUrlBlock':true, 'listUrlBlock':true, 'hashtagUrlBlock':true, 'linkUrlBlock':true,
                             'usernameIncludeSymbol':true, 'suppressLists':true, 'suppressNoFollow':true, 'targetBlank':true,
-                            'suppressDataScreenName':true, 'urlEntities':true, 'symbolTag':true, 'textWithSymbolTag':true, 'urlTarget':true,
-                            'invisibleTagAttrs':true, 'linkAttributeBlock':true, 'linkTextBlock': true, 'htmlEscapeNonEntities': true
+                            'suppressDataScreenName':true, 'urlEntities':true, 'symbolTagClass':true, 'symbolTag':true,
+                            'textWithSymbolTag':true, 'textWithSymbolTagClass':true, 'urlTarget':true, 'invisibleTagAttrs':true,
+                            'linkAttributeBlock':true, 'linkTextBlock': true, 'htmlEscapeNonEntities': true
                             };
 
   var BOOLEAN_ATTRIBUTES = {'disabled':true, 'readonly':true, 'multiple':true, 'checked':true};
@@ -469,9 +470,11 @@
   };
 
   twttr.txt.linkToTextWithSymbol = function(entity, symbol, text, attributes, options) {
-    var taggedSymbol = options.symbolTag ? "<" + options.symbolTag + ">" + symbol + "</"+ options.symbolTag + ">" : symbol;
+    var taggedSymbolClass = options.symbolTagClass ? " class=\"" + options.symbolTagClass + "\"" : "";
+    var taggedSymbol = options.symbolTag ? "<" + options.symbolTag + taggedSymbolClass + ">" + symbol + "</"+ options.symbolTag + ">" : symbol;
     text = twttr.txt.htmlEscape(text);
-    var taggedText = options.textWithSymbolTag ? "<" + options.textWithSymbolTag + ">" + text + "</"+ options.textWithSymbolTag + ">" : text;
+    var taggedTextClass = options.textWithSymbolTagClass ? " class=\"" + options.textWithSymbolTagClass + "\"" : "";
+    var taggedText = options.textWithSymbolTag ? "<" + options.textWithSymbolTag + taggedTextClass + ">" + text + "</"+ options.textWithSymbolTag + ">" : text;
 
     if (options.usernameIncludeSymbol || !symbol.match(twttr.txt.regexen.atSigns)) {
       return twttr.txt.linkToText(entity, taggedSymbol + taggedText, attributes, options);
@@ -699,21 +702,21 @@
         json.user_mentions[i].screenName = json.user_mentions[i].screen_name;
       }
     }
-    
+
     if (json.hashtags) {
       for (var i = 0; i < json.hashtags.length; i++) {
         // this is a #hashtag
         json.hashtags[i].hashtag = json.hashtags[i].text;
       }
     }
-    
+
     if (json.symbols) {
       for (var i = 0; i < json.symbols.length; i++) {
         // this is a $CASH tag
         json.symbols[i].cashtag = json.symbols[i].text;
       }
     }
-    
+
     // concatenate all entities
     var entities = [];
     for (var key in json) {
