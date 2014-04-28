@@ -298,15 +298,15 @@
   twttr.txt.regexen.validUrlQueryBalancedParens = regexSupplant(
     '\\('                                   +
       '(?:'                                 +
-        '#{validUrlQueryChars}+'      +
-		'|'                                 +
+        '#{validUrlQueryChars}+'            +
+        '|'                                 +
         // allow one nested level of balanced parentheses
         '(?:'                               +
-          '#{validUrlQueryChars}*'    +
+          '#{validUrlQueryChars}*'          +
           '\\('                             +
-            '#{validUrlQueryChars}+'  +
+            '#{validUrlQueryChars}+'        +
           '\\)'                             +
-          '#{validUrlQueryChars}*'    +
+          '#{validUrlQueryChars}*'          +
         ')'                                 +
       ')'                                   +
     '\\)'
@@ -325,7 +325,7 @@
         '(#{validDomain})'                                         + // $5 Domain(s)
         '(?::(#{validPortNumber}))?'                               + // $6 Port number (optional)
         '(\\/#{validUrlPath}*)?'                                   + // $7 URL Path
-        '(\\?#{validUrlQuery})?'  + // $8 Query String
+        '(\\?#{validUrlQuery})?'                                   + // $8 Query String
       ')'                                                          +
     ')'
   , 'gi');
