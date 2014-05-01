@@ -307,3 +307,52 @@ test("twttr.txt.extractUrls", function() {
   equal(twttr.txt.extractUrls(message_with_hyphenated_url)[0], "hyphenated-url.com", "Should extract full url with hyphen.");
   equal(twttr.txt.extractUrls(message_with_www_hyphenated_url)[0], "www.123-hyphenated-url.com", "Should extract full url with hyphen.");
 });
+
+test("consistent result from autoLinkWithJSON", function(){
+  // This is based on tweet 461744655009591296
+  var tweet = "@rdioapi @affan_imran 🎉 We just came up with someone's hack day project at @rdio.";
+  var entities = {
+    "hashtags": [],
+    "symbols": [],
+    "urls": [],
+    "user_mentions": [
+      {
+        "screen_name": "rdioapi",
+        "name": "Rdio API",
+        "id": 161493716,
+        "id_str": "161493716",
+        "indices": [
+          0,
+          8
+        ]
+      },
+      {
+        "screen_name": "affan_imran",
+        "name": "Affan I",
+        "id": 18968588,
+        "id_str": "18968588",
+        "indices": [
+          9,
+          21
+        ]
+      },
+      {
+        "screen_name": "Rdio",
+        "name": "Rdio",
+        "id": 54205414,
+        "id_str": "54205414",
+        "indices": [
+          75,
+          80
+        ]
+      }
+    ]
+  };
+
+  var expectedResult = "@<a class=\"tweet-url username\" href=\"https://twitter.com/rdioapi\" data-screen-name=\"rdioapi\" rel=\"nofollow\">rdioapi</a> @<a class=\"tweet-url username\" href=\"https://twitter.com/affan_imran\" data-screen-name=\"affan_imran\" rel=\"nofollow\">affan_imran</a> 🎉 We just came up with someone's hack day project at @<a class=\"tweet-url username\" href=\"https://twitter.com/Rdio\" data-screen-name=\"Rdio\" rel=\"nofollow\">Rdio</a>.";
+
+  equal(twttr.txt.autoLinkWithJSON(tweet, entities), expectedResult);
+  // Currently this second invocation triggers a failure as it
+  // produces a different result.
+  equal(twttr.txt.autoLinkWithJSON(tweet, entities), expectedResult);
+});
