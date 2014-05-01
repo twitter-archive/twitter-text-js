@@ -307,3 +307,29 @@ test("twttr.txt.extractUrls", function() {
   equal(twttr.txt.extractUrls(message_with_hyphenated_url)[0], "hyphenated-url.com", "Should extract full url with hyphen.");
   equal(twttr.txt.extractUrls(message_with_www_hyphenated_url)[0], "www.123-hyphenated-url.com", "Should extract full url with hyphen.");
 });
+
+
+test("@ gets linked with name", function(){
+  var tweet = "This mentions @twitter";
+  var entities = {
+    "hashtags": [],
+    "symbols": [],
+    "urls": [],
+    "user_mentions": [
+      {
+        "screen_name": "twitter",
+        "name": "Twitter",
+        "id": 783214,
+        "id_str": "783214",
+        "indices": [
+          14,
+          22
+        ]
+      }
+    ]
+  };
+
+  var expectedResult = 'This mentions <a class=\"tweet-url username\" href=\"https://twitter.com/twitter\" data-screen-name=\"twitter\" rel=\"nofollow\">@twitter</a>';
+
+  equal(twttr.txt.autoLinkWithJSON(tweet, entities), expectedResult);
+});
