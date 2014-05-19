@@ -651,6 +651,7 @@
     options.listUrlBase = options.listUrlBase || "https://twitter.com/";
     options.htmlAttrs = twttr.txt.extractHtmlAttrsFromOptions(options);
     options.invisibleTagAttrs = options.invisibleTagAttrs || "style='position:absolute;left:-9999px;'";
+    options.usernameIncludeSymbol = options.usernameIncludeSymbol || true;
 
     // remap url entities to hash
     var urlEntities, i, len;
@@ -699,21 +700,21 @@
         json.user_mentions[i].screenName = json.user_mentions[i].screen_name;
       }
     }
-    
+
     if (json.hashtags) {
       for (var i = 0; i < json.hashtags.length; i++) {
         // this is a #hashtag
         json.hashtags[i].hashtag = json.hashtags[i].text;
       }
     }
-    
+
     if (json.symbols) {
       for (var i = 0; i < json.symbols.length; i++) {
         // this is a $CASH tag
         json.symbols[i].cashtag = json.symbols[i].text;
       }
     }
-    
+
     // concatenate all entities
     var entities = [];
     for (var key in json) {

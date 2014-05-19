@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 console.log("Running Node tests")
 
 assert = require('assert');
