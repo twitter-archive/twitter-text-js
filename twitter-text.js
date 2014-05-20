@@ -436,6 +436,11 @@
     return r;
   }
 
+  // Existence, as in coffeescript `obj?` coffeescript.org/#overview
+  function existence(obj) {
+    return typeof obj !== "undefined" && obj !== null;
+  }
+
   twttr.txt.tagAttrs = function(attributes) {
     var htmlAttrs = "";
     for (var k in attributes) {
@@ -651,7 +656,7 @@
     options.listUrlBase = options.listUrlBase || "https://twitter.com/";
     options.htmlAttrs = twttr.txt.extractHtmlAttrsFromOptions(options);
     options.invisibleTagAttrs = options.invisibleTagAttrs || "style='position:absolute;left:-9999px;'";
-    options.usernameIncludeSymbol = options.usernameIncludeSymbol || true;
+    options.usernameIncludeSymbol = existence(options.usernameIncludeSymbol) ? options.usernameIncludeSymbol : true;
 
     // remap url entities to hash
     var urlEntities, i, len;
