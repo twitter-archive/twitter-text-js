@@ -95,8 +95,16 @@
   ];
   addCharsToCharClass(INVALID_CHARS, 0x202A, 0x202E); // Directional change
 
+  var SPECIAL_CHARS_INCLUDED = [
+    fromCode(0x00b7), // MIDDLE DOT
+    fromCode(0x2022), // BULLET
+    fromCode(0x30fb), // KATAKANA MIDDLE DOT
+    fromCode(0xff65), // HALFWIDTH KATAKANA MIDDLE DOT
+  ];
+
   twttr.txt.regexen.spaces_group = regexSupplant(UNICODE_SPACES.join(""));
   twttr.txt.regexen.spaces = regexSupplant("[" + UNICODE_SPACES.join("") + "]");
+  twttr.txt.regexen.special_chars_included = regexSupplant(SPECIAL_CHARS_INCLUDED.join(""));
   twttr.txt.regexen.invalid_chars_group = regexSupplant(INVALID_CHARS.join(""));
   twttr.txt.regexen.punct = /\!'#%&'\(\)*\+,\\\-\.\/:;<=>\?@\[\]\^_{|}~\$/;
   twttr.txt.regexen.rtl_chars = /[\u0600-\u06FF]|[\u0750-\u077F]|[\u0590-\u05FF]|[\uFE70-\uFEFF]/mg;
@@ -205,7 +213,7 @@
   // A hashtag must contain characters, numbers and underscores, but not all numbers.
   twttr.txt.regexen.hashSigns = /[#＃]/;
   twttr.txt.regexen.hashtagAlpha = regexSupplant(/[a-z_#{latinAccentChars}#{nonLatinHashtagChars}]/i);
-  twttr.txt.regexen.hashtagAlphaNumeric = regexSupplant(/[a-z0-9_#{latinAccentChars}#{nonLatinHashtagChars}]/i);
+  twttr.txt.regexen.hashtagAlphaNumeric = regexSupplant(/[a-z0-9_#{latinAccentChars}#{nonLatinHashtagChars}#{special_chars_included}]/i);
   twttr.txt.regexen.endHashtagMatch = regexSupplant(/^(?:#{hashSigns}|:\/\/)/);
   twttr.txt.regexen.hashtagBoundary = regexSupplant(/(?:^|$|[^&a-z0-9_#{latinAccentChars}#{nonLatinHashtagChars}])/);
   twttr.txt.regexen.validHashtag = regexSupplant(/(#{hashtagBoundary})(#{hashSigns})(#{hashtagAlphaNumeric}*#{hashtagAlpha}#{hashtagAlphaNumeric}*)/gi);
