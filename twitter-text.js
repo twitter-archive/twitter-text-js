@@ -282,7 +282,7 @@
   twttr.txt.regexen.validSpecialCCTLD = regexSupplant(RegExp(
     '(?:(?:co|tv)(?=[^0-9a-zA-Z@]|$))'));
   twttr.txt.regexen.validDomain = regexSupplant(/(?:#{validSubdomain}*#{validDomainName}(?:#{validGTLD}|#{validCCTLD}|#{validPunycode}))/);
-  twttr.txt.regexen.validAsciiDomain = regexSupplant(/(?:(?:[\-a-z0-9#{latinAccentChars}]+)\.)+(?:#{validGTLD}|#{validCCTLD}|#{validPunycode})/gi);
+  twttr.txt.regexen.validAsciiDomain = regexSupplant(/(?:(?:[a-z0-9#{latinAccentChars}][-a-z0-9#{latinAccentChars}]*)\.)+(?:#{validGTLD}|#{validCCTLD}|#{validPunycode})/gi);
   twttr.txt.regexen.invalidShortDomain = regexSupplant(/^#{validDomainName}#{validCCTLD}$/i);
   twttr.txt.regexen.validSpecialShortDomain = regexSupplant(/^#{validDomainName}#{validSpecialCCTLD}$/i);
 
