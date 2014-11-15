@@ -321,8 +321,29 @@
       ')|(?:@#{validGeneralUrlPathChars}+\/)'+
     ')', 'i');
 
-  twttr.txt.regexen.validUrlQueryChars = /[a-z0-9!?\*'@\(\);:&=\+\$\/%#\[\]\-_\.,~|]/i;
-  twttr.txt.regexen.validUrlQueryEndingChars = /[a-z0-9_&=#\/]/i;
+  twttr.txt.regexen.validUrlQueryChars = /[a-z0-9!?\*'@;:&=\+\$\/%#\[\]\-_\.,~|]/i;
+  twttr.txt.regexen.validUrlQueryBalancedParens = regexSupplant(
+    '\\('                                   +
+      '(?:'                                 +
+        '#{validUrlQueryChars}+'            +
+        '|'                                 +
+        // allow one nested level of balanced parentheses
+        '(?:'                               +
+          '#{validUrlQueryChars}*'          +
+          '\\('                             +
+            '#{validUrlQueryChars}+'        +
+          '\\)'                             +
+          '#{validUrlQueryChars}*'          +
+        ')'                                 +
+      ')'                                   +
+    '\\)'
+  , 'i');
+  twttr.txt.regexen.validUrlQueryEndingChars = regexSupplant(/[a-z0-9_&=#\/]|(?:#{validUrlQueryBalancedParens})/i);
+  twttr.txt.regexen.validUrlQuery = regexSupplant('(?:' +
+      '#{validUrlQueryChars}*' +
+        '(?:#{validUrlQueryBalancedParens}#{validUrlQueryChars}*)*' +
+        '(?:#{validUrlQueryEndingChars})'+
+    ')', 'i');
   twttr.txt.regexen.extractUrl = regexSupplant(
     '('                                                            + // $1 total match
       '(#{validUrlPrecedingChars})'                                + // $2 Preceeding chracter
@@ -331,7 +352,7 @@
         '(#{validDomain})'                                         + // $5 Domain(s)
         '(?::(#{validPortNumber}))?'                               + // $6 Port number (optional)
         '(\\/#{validUrlPath}*)?'                                   + // $7 URL Path
-        '(\\?#{validUrlQueryChars}*#{validUrlQueryEndingChars})?'  + // $8 Query String
+        '(\\?#{validUrlQuery})?'                                   + // $8 Query String
       ')'                                                          +
     ')'
   , 'gi');

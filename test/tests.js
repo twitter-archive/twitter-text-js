@@ -306,4 +306,11 @@ test("twttr.txt.extractUrls", function() {
   var message_with_www_hyphenated_url = "Message with www.123-hyphenated-url.com";
   equal(twttr.txt.extractUrls(message_with_hyphenated_url)[0], "hyphenated-url.com", "Should extract full url with hyphen.");
   equal(twttr.txt.extractUrls(message_with_www_hyphenated_url)[0], "www.123-hyphenated-url.com", "Should extract full url with hyphen.");
+  
+  var message_with_balanced_parens_query = "Message with http://balancedparensquery.com?q=@s=(1,2)";
+  var message_with_balanced_parens_query_in_parens = "Message with (http://balancedparensquery.com?q=@s=(1,2))";
+  
+  equal(twttr.txt.extractUrls(message_with_balanced_parens_query)[0], "http://balancedparensquery.com?q=@s=(1,2)", "Should extract balanced parens at end of query.");
+  equal(twttr.txt.extractUrls(message_with_balanced_parens_query_in_parens)[0], "http://balancedparensquery.com?q=@s=(1,2)", "Should NOT extract extra paren after query.");
+  
 });
